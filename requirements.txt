@@ -1,22 +1,12 @@
 # Pipeline de datos meteorológicos — dependencias
 # Compatible con Python 3.11 y Apache Airflow 2.9.1
 
-# HTTP y API
 requests==2.31.0
 
-# Procesamiento de datos
 pandas==2.2.2
-pyarrow==16.1.0          # Motor Parquet para pandas; también lo usa Polars
-
-# Configuración
+pyarrow==16.1.0
 PyYAML==6.0.1
-
-# Verificación opcional con DuckDB (lectura de Parquet sin Spark)
 duckdb==1.0.0
-
-# Testing
 pytest==8.2.2
 pytest-mock==3.14.0
-
-# Utilidades
 python-dateutil==2.9.0

@@ -5,13 +5,14 @@ from pathlib import Path
 
 def get_logger(name: str, log_file: str = None) -> logging.Logger:
     """
-    Retorna un logger configurado con salida a consola y opcionalmente a archivo.
+    Retorna un logger configurado con salida a consola y opcionalmente
+    a archivo.
     Se usa en todos los módulos del pipeline para trazabilidad uniforme.
     """
     logger = logging.getLogger(name)
 
     if logger.handlers:
-        return logger  # Evitar duplicar handlers si ya fue configurado
+        return logger
 
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter(

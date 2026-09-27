@@ -3,7 +3,8 @@ Módulo de extracción de datos meteorológicos desde Open-Meteo Archive API.
 
 Diseño:
 - Parametrizable: ciudades y periodo vienen del archivo de configuración.
-- Sin duplicación: una sola función construye y ejecuta la query para cualquier ciudad.
+- Sin duplicación: una sola función construye y ejecuta la query para
+  cualquier ciudad.
 - Persiste la respuesta original (JSON) en capa raw con metadata de extracción.
 - Logs detallados en cada paso.
 - Reintentos con backoff para errores de conexión transitorios.
@@ -40,16 +41,18 @@ def build_api_params(city: dict, cfg: dict) -> dict:
 def fetch_city(city: dict, cfg: dict) -> dict:
     """
     Consulta la API para una ciudad con reintentos y validación HTTP.
-    Retorna el JSON de respuesta o lanza excepción si todos los intentos fallan.
+    Retorna el JSON de respuesta o lanza excepción si todos los 
+    intentos fallan.
     """
-    url     = cfg["api"]["base_url"]
-    params  = build_api_params(city, cfg)
+    url = cfg["api"]["base_url"]
+    params = build_api_params(city, cfg)
     retries = cfg["api"]["max_retries"]
-    delay   = cfg["api"]["retry_delay_seconds"]
+    delay = cfg["api"]["retry_delay_seconds"]
     timeout = cfg["api"]["timeout_seconds"]
 
     logger.info(f"Extrayendo: {city['name']} ({city['slug']}) | "
-                f"{cfg['pipeline']['start_date']} → {cfg['pipeline']['end_date']}")
+                f"{cfg['pipeline']['start_date']} → "
+                f"{cfg['pipeline']['end_date']}")
 
     for attempt in range(1, retries + 1):
         try:
@@ -58,19 +61,22 @@ def fetch_city(city: dict, cfg: dict) -> dict:
             data = response.json()
 
             if "daily" not in data:
-                raise ValueError(f"Respuesta inesperada de API: 'daily' no encontrado. "
-                                 f"Respuesta: {str(data)[:200]}")
+                raise ValueError(
+                    f"Respuesta inesperada de API: 'daily' no encontrado. "
+                    f"Respuesta: {str(data)[:200]}")
 
-            logger.info(f"{city['name']}: {len(data['daily'].get('time', []))} días recibidos")
+            logger.info(f"{city['name']}: {len(
+                data['daily'].get('time', []))} días recibidos")
             return data
 
         except requests.exceptions.ConnectionError as e:
-            logger.warning(f"  Intento {attempt}/{retries} — Error de conexión: {e}")
+            logger.warning(
+                f"  Intento {attempt}/{retries} — Error de conexión: {e}")
         except requests.exceptions.Timeout as e:
             logger.warning(f"  Intento {attempt}/{retries} — Timeout: {e}")
         except requests.exceptions.HTTPError as e:
             logger.error(f"  Error HTTP {response.status_code}: {e}")
-            raise  # No reintenta en errores HTTP (4xx/5xx)
+            raise
         except ValueError as e:
             logger.error(f"  Error de validación: {e}")
             raise
@@ -91,7 +97,7 @@ def save_raw(city: dict, data: dict, raw_path: str) -> Path:
     para garantizar reproducibilidad y trazabilidad.
     """
     extracted_at = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    out_dir      = Path(raw_path) / city["slug"]
+    out_dir = Path(raw_path) / city["slug"]
     out_dir.mkdir(parents=True, exist_ok=True)
     out_file = out_dir / f"{city['slug']}_{extracted_at}.json"
 
@@ -125,18 +131,20 @@ def validate_raw(raw_file: Path) -> bool:
             data = json.load(f)
 
         required_meta = {"city_name", "city_slug", "extracted_at"}
-        missing_meta  = required_meta - set(data.get("metadata", {}).keys())
+        missing_meta = required_meta - set(data.get("metadata", {}).keys())
         if missing_meta:
-            logger.error(f"  Raw inválido: faltan campos en metadata: {missing_meta}")
+            logger.error(f"Raw inválido: faltan campos en metadata: "
+                         f"{missing_meta}")
             return False
 
         daily = data.get("payload", {}).get("daily", {})
         if not daily or "time" not in daily:
-            logger.error("  Raw inválido: 'daily.time' no encontrado en payload")
+            logger.error("Raw inválido: 'daily.time' no encontrado en payload")
             return False
 
         n_days = len(daily["time"])
-        logger.info(f"Raw válido: {data['metadata']['city_name']} — {n_days} días")
+        logger.info(
+            f"Raw válido: {data['metadata']['city_name']} — {n_days} días")
         return True
 
     except (json.JSONDecodeError, KeyError) as e:
@@ -146,30 +154,33 @@ def validate_raw(raw_file: Path) -> bool:
 
 def extract_all(config_path: str = None) -> list[Path]:
     """
-    Punto de entrada principal: extrae datos para todas las ciudades configuradas.
+    Punto de entrada principal: extrae datos para todas las ciudades 
+    configuradas.
     Retorna lista de archivos raw generados.
 
     Diseño: una función, sin duplicación por ciudad — el loop maneja el resto.
     """
-    cfg      = load_config(config_path)
+    cfg = load_config(config_path)
     raw_path = cfg["storage"]["raw_path"]
-    cities   = cfg["cities"]
+    cities = cfg["cities"]
     raw_files = []
-    errors    = []
+    errors = []
 
     logger.info(f"Iniciando extracción: {len(cities)} ciudades | "
-                f"{cfg['pipeline']['start_date']} → {cfg['pipeline']['end_date']}")
+                f"{cfg['pipeline']['start_date']} → "
+                f"{cfg['pipeline']['end_date']}")
 
     for city in cities:
         try:
-            data     = fetch_city(city, cfg)
+            data = fetch_city(city, cfg)
             raw_file = save_raw(city, data, raw_path)
             raw_files.append(raw_file)
         except Exception as e:
             logger.error(f"Falló extracción para {city['name']}: {e}")
             errors.append(city["name"])
 
-    logger.info(f"Extracción completada: {len(raw_files)}/{len(cities)} exitosas")
+    logger.info(
+        f"Extracción completada: {len(raw_files)}/{len(cities)} exitosas")
     if errors:
         logger.warning(f"Ciudades con error: {errors}")
 
