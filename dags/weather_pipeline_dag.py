@@ -20,8 +20,9 @@ DEFAULT_ARGS = {
 
 
 @dag(
-    dag_id="weather_pipeline_colombia",
-    description="Pipeline ETL meteorológico para 5 ciudades colombianas — Open-Meteo",
+    dag_id="weather_pipeline",
+    description="""Pipeline ETL meteorológico para 5 ciudades
+                colombianas — Open-Meteo""",
     default_args=DEFAULT_ARGS,
     schedule=None,
     start_date=datetime(2026, 1, 1),
@@ -62,7 +63,7 @@ def weather_pipeline():
         from src.extractor.weather_extractor import validate_raw
 
         valid_paths = []
-        invalid     = []
+        invalid = []
 
         for path in raw_paths:
             if validate_raw(Path(path)):
@@ -83,8 +84,8 @@ def weather_pipeline():
     def transform_weather(raw_paths: list[str]) -> str:
         """
         Transforma archivos raw a DataFrame limpio con indicadores.
-        Serializa el DataFrame a un archivo temporal Parquet para pasarlo entre tareas.
-        (Evitar serializar DataFrames grandes en XCom directamente.)
+        Serializa el DataFrame a un archivo temporal Parquet para pasarlo 
+        entre tareas.
         """
         import sys
         sys.path.insert(0, "/opt/airflow")
@@ -92,15 +93,13 @@ def weather_pipeline():
         from src.transformer.weather_transformer import transform_all
         from src.utils.config import load_config
 
-        paths   = [Path(p) for p in raw_paths]
+        paths = [Path(p) for p in raw_paths]
         df, reports = transform_all(raw_files=paths)
-
-        # Serializar resultado temporal
-        cfg      = load_config()
-        tmp_dir  = Path(cfg["storage"]["dashboard_path"])
+        cfg = load_config()
+        tmp_dir = Path(cfg["storage"]["dashboard_path"])
         tmp_dir.mkdir(parents=True, exist_ok=True)
 
-        tmp_df      = tmp_dir / "_tmp_transformed.parquet"
+        tmp_df = tmp_dir / "_tmp_transformed.parquet"
         tmp_reports = tmp_dir / "_tmp_reports.json"
 
         df.to_parquet(tmp_df, index=False)
@@ -123,8 +122,8 @@ def weather_pipeline():
         from src.loader.parquet_loader import save_parquet
         from src.utils.config import load_config
 
-        cfg        = load_config()
-        df         = pd.read_parquet(tmp_parquet_path)
+        cfg = load_config()
+        df = pd.read_parquet(tmp_parquet_path)
         parquet_out = save_parquet(
             df,
             cfg["storage"]["parquet_path"],
@@ -138,7 +137,8 @@ def weather_pipeline():
     def generate_dashboard_dataset(tmp_parquet_path: str) -> dict:
         """
         Genera el dataset mensual resumido para BI y el reporte de calidad.
-        Lee el DataFrame temporal para no re-leer todos los parquets particionados.
+        Lee el DataFrame temporal para no re-leer todos los parquets
+        particionados.
         """
         import sys
         sys.path.insert(0, "/opt/airflow")
@@ -152,9 +152,10 @@ def weather_pipeline():
         )
         from src.utils.config import load_config
 
-        cfg           = load_config()
-        df            = pd.read_parquet(tmp_parquet_path)
-        reports_file  = Path(cfg["storage"]["dashboard_path"]) / "_tmp_reports.json"
+        cfg = load_config()
+        df = pd.read_parquet(tmp_parquet_path)
+        reports_file = Path(
+            cfg["storage"]["dashboard_path"]) / "_tmp_reports.json"
 
         with open(reports_file) as f:
             reports = json.load(f)
@@ -170,7 +171,9 @@ def weather_pipeline():
         result = {
             "dashboard_records": len(
                 pd.read_parquet(
-                    Path(cfg["storage"]["dashboard_path"]) / "weather_dashboard.parquet"
+                    Path(
+                        cfg["storage"]["dashboard_path"]
+                        ) / "weather_dashboard.parquet"
                 )
             ),
             "parquet_records": len(sample),
@@ -179,11 +182,11 @@ def weather_pipeline():
         log.info(f"generate_dashboard_dataset: pipeline completado | {result}")
         return result
 
-    raw_paths     = extract_weather()
-    valid_paths   = validate_raw_data(raw_paths)
-    tmp_parquet   = transform_weather(valid_paths)
-    parquet_path  = load_parquet(tmp_parquet)
-    result        = generate_dashboard_dataset(tmp_parquet)
+    raw_paths = extract_weather()
+    valid_paths = validate_raw_data(raw_paths)
+    tmp_parquet = transform_weather(valid_paths)
+    parquet_path = load_parquet(tmp_parquet)
+    result = generate_dashboard_dataset(tmp_parquet)
 
     parquet_path >> result
 

@@ -30,18 +30,17 @@ from src.utils.logger import get_logger
 logger = get_logger(__name__, log_file="logs/transformer.log")
 
 
-# ── Mapeo de nombres de columnas API → nombres estandarizados ────────────────
 COLUMN_MAP = {
-    "time":                        "date",
-    "temperature_2m_max":          "temp_max_c",
-    "temperature_2m_min":          "temp_min_c",
-    "temperature_2m_mean":         "temp_mean_c",
-    "precipitation_sum":           "precipitation_mm",
-    "rain_sum":                    "rain_mm",
-    "precipitation_hours":         "precipitation_hours",
-    "windspeed_10m_max":           "windspeed_max_kmh",
-    "windgusts_10m_max":           "windgusts_max_kmh",
-    "et0_fao_evapotranspiration":  "evapotranspiration_mm",
+    "time": "date",
+    "temperature_2m_max": "temp_max_c",
+    "temperature_2m_min": "temp_min_c",
+    "temperature_2m_mean": "temp_mean_c",
+    "precipitation_sum": "precipitation_mm",
+    "rain_sum": "rain_mm",
+    "precipitation_hours": "precipitation_hours",
+    "windspeed_10m_max": "windspeed_max_kmh",
+    "windgusts_10m_max": "windgusts_max_kmh",
+    "et0_fao_evapotranspiration": "evapotranspiration_mm",
 }
 
 
@@ -52,34 +51,32 @@ def raw_to_dataframe(raw_file: Path) -> pd.DataFrame:
     with open(raw_file, "r", encoding="utf-8") as f:
         envelope = json.load(f)
 
-    meta    = envelope["metadata"]
+    meta = envelope["metadata"]
     payload = envelope["payload"]
-    daily   = payload["daily"]
+    daily = payload["daily"]
 
     # Construir DataFrame base desde variables diarias
     df = pd.DataFrame(daily)
 
     # Renombrar columnas al estándar del proyecto
-    df = df.rename(columns={k: v for k, v in COLUMN_MAP.items() if k in df.columns})
+    df = df.rename(columns={k: v for k, v in COLUMN_MAP.items(
+    ) if k in df.columns})
 
-    # ── Tipos de datos ────────────────────────────────────────────────────────
     df["date"] = pd.to_datetime(df["date"])
 
-    # Columnas numéricas: forzar tipo float (pueden venir como None/null)
     numeric_cols = [c for c in df.columns if c != "date"]
     for col in numeric_cols:
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    # ── Metadatos geográficos y temporales ───────────────────────────────────
-    df["city_name"]   = meta["city_name"]
-    df["city_slug"]   = meta["city_slug"]
-    df["department"]  = meta["department"]
-    df["latitude"]    = meta["latitude"]
-    df["longitude"]   = meta["longitude"]
+    df["city_name"] = meta["city_name"]
+    df["city_slug"] = meta["city_slug"]
+    df["department"] = meta["department"]
+    df["latitude"] = meta["latitude"]
+    df["longitude"] = meta["longitude"]
     df["extracted_at"] = meta["extracted_at"]
-    df["year"]        = df["date"].dt.year
-    df["month"]       = df["date"].dt.month
-    df["month_name"]  = df["date"].dt.strftime("%B")
+    df["year"] = df["date"].dt.year
+    df["month"] = df["date"].dt.month
+    df["month_name"] = df["date"].dt.strftime("%B")
     df["day_of_week"] = df["date"].dt.day_name()
 
     return df
@@ -92,39 +89,34 @@ def check_quality(df: pd.DataFrame, cfg: dict) -> dict:
     - Duplicados
     - Validación de rango de fechas
     """
-    city  = df["city_name"].iloc[0]
+    city = df["city_name"].iloc[0]
     start = pd.to_datetime(cfg["pipeline"]["start_date"])
-    end   = pd.to_datetime(cfg["pipeline"]["end_date"])
+    end = pd.to_datetime(cfg["pipeline"]["end_date"])
 
-    # Valores faltantes
     nulls = df.isnull().sum()
     nulls = nulls[nulls > 0].to_dict()
-
-    # Duplicados
     n_dups = df.duplicated(subset=["date", "city_slug"]).sum()
 
-    # Rango de fechas
     actual_start = df["date"].min()
-    actual_end   = df["date"].max()
+    actual_end = df["date"].max()
     expected_days = (end - start).days + 1
-    actual_days   = len(df)
-    missing_days  = expected_days - actual_days
+    actual_days = len(df)
+    missing_days = expected_days - actual_days
 
     report = {
-        "city":           city,
-        "total_records":  actual_days,
-        "expected_days":  expected_days,
-        "missing_days":   missing_days,
-        "duplicates":     int(n_dups),
-        "null_fields":    nulls,
-        "date_min":       str(actual_start.date()),
-        "date_max":       str(actual_end.date()),
-        "date_range_ok":  (actual_start.date() == start.date() and
+        "city": city,
+        "total_records": actual_days,
+        "expected_days": expected_days,
+        "missing_days": missing_days,
+        "duplicates": int(n_dups),
+        "null_fields": nulls,
+        "date_min": str(actual_start.date()),
+        "date_max": str(actual_end.date()),
+        "date_range_ok": (actual_start.date() == start.date() and
                            actual_end.date() <= end.date()),
     }
 
-    # Log del reporte
-    status = "✅" if (missing_days == 0 and n_dups == 0) else "⚠️"
+    status = "ok" if (missing_days == 0 and n_dups == 0) else "Revisar"
     logger.info(f"  {status} Calidad {city}: "
                 f"{actual_days}/{expected_days} días | "
                 f"Faltantes: {missing_days} | Duplicados: {n_dups} | "
@@ -148,21 +140,24 @@ def add_indicators(df: pd.DataFrame, thresholds: dict) -> pd.DataFrame:
     """
     t = thresholds
 
-    df["rain_day"]     = (df["precipitation_mm"] > t["rain_day_mm"]).astype(int)
-    df["heavy_rain"]   = (df["precipitation_mm"] > t["rain_heavy_mm"]).astype(int)
-    df["strong_wind"]  = (df["windgusts_max_kmh"] > t["wind_strong_kmh"]).astype(int)
-    df["cold_day"]     = (df["temp_max_c"] < t["temp_cold_c"]).astype(int)
-    df["hot_day"]      = (df["temp_max_c"] > t["temp_hot_c"]).astype(int)
+    df["rain_day"] = (
+        df["precipitation_mm"] > t["rain_day_mm"]).astype(int)
+    df["heavy_rain"] = (
+        df["precipitation_mm"] > t["rain_heavy_mm"]).astype(int)
+    df["strong_wind"] = (
+        df["windgusts_max_kmh"] > t["wind_strong_kmh"]).astype(int)
+    df["cold_day"] = (
+        df["temp_max_c"] < t["temp_cold_c"]).astype(int)
+    df["hot_day"] = (
+        df["temp_max_c"] > t["temp_hot_c"]).astype(int)
 
-    # Día adverso: cumple al menos una condición extrema
-    df["adverse_day"]  = (
+    df["adverse_day"] = (
         (df["heavy_rain"] == 1) |
         (df["strong_wind"] == 1) |
         (df["cold_day"] == 1) |
         (df["hot_day"] == 1)
     ).astype(int)
 
-    # Amplitud térmica diaria
     df["temp_range_c"] = (df["temp_max_c"] - df["temp_min_c"]).round(2)
 
     return df
@@ -189,12 +184,12 @@ def transform_city(raw_file: Path, cfg: dict) -> tuple[pd.DataFrame, dict]:
     city_slug = raw_file.parent.name
     logger.info(f"Transformando: {city_slug} — {raw_file.name}")
 
-    df      = raw_to_dataframe(raw_file)
-    df      = remove_duplicates(df)
-    report  = check_quality(df, cfg)
-    df      = add_indicators(df, cfg["thresholds"])
+    df = raw_to_dataframe(raw_file)
+    df = remove_duplicates(df)
+    report = check_quality(df, cfg)
+    df = add_indicators(df, cfg["thresholds"])
 
-    logger.info(f"  ✅ {city_slug}: {len(df)} registros procesados, "
+    logger.info(f"{city_slug}: {len(df)} registros procesados, "
                 f"{len(df.columns)} columnas")
     return df, report
 
@@ -205,20 +200,19 @@ def transform_all(raw_files: list[Path] = None, config_path: str = None
     Punto de entrada: transforma todos los archivos raw disponibles.
     Si raw_files es None, lee todos los JSON de data/raw/.
 
-    Retorna (DataFrame consolidado de todas las ciudades, lista de reportes de calidad).
+    Retorna (DataFrame consolidado de todas las ciudades,
+    lista de reportes de calidad).
     """
     cfg = load_config(config_path)
 
     if raw_files is None:
-        raw_path  = Path(cfg["storage"]["raw_path"])
+        raw_path = Path(cfg["storage"]["raw_path"])
         raw_files = sorted(raw_path.rglob("*.json"))
         logger.info(f"Encontrados {len(raw_files)} archivos raw en {raw_path}")
 
     if not raw_files:
-        raise FileNotFoundError(
-            f"No hay archivos raw. Ejecuta primero el extractor.")
+        raise FileNotFoundError("No hay archivos raw.")
 
-    # Para cada ciudad tomar solo el archivo más reciente (último por nombre)
     latest: dict[str, Path] = {}
     for f in raw_files:
         slug = f.parent.name
@@ -238,7 +232,8 @@ def transform_all(raw_files: list[Path] = None, config_path: str = None
         raise RuntimeError("Ninguna ciudad pudo ser transformada.")
 
     consolidated = pd.concat(dfs, ignore_index=True)
-    logger.info(f"Transformación completada: {len(consolidated)} registros totales "
+    logger.info(f"Transformación completada: {len(consolidated)} "
+                "registros totales "
                 f"de {len(dfs)} ciudades")
 
     return consolidated, reports

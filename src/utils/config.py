@@ -5,12 +5,12 @@ import yaml
 def load_config(config_path: str = None) -> dict:
     """
     Carga el archivo de configuración YAML.
-    Busca en la ruta indicada o sube directorios hasta encontrar config/cities.yaml.
+    Busca en la ruta indicada o sube directorios hasta encontrar 
+    config/cities.yaml.
     """
     if config_path:
         path = Path(config_path)
     else:
-        # Búsqueda automática: sube desde el módulo actual hasta encontrar config/
         current = Path(__file__).resolve()
         for parent in current.parents:
             candidate = parent / "config" / "cities.yaml"
@@ -20,7 +20,8 @@ def load_config(config_path: str = None) -> dict:
         else:
             raise FileNotFoundError(
                 "No se encontró config/cities.yaml. "
-                "Ejecuta desde la raíz del proyecto o pasa config_path explícitamente."
+                "Ejecuta desde la raíz del proyecto o pasa "
+                "config_path explícitamente."
             )
 
     with open(path, "r", encoding="utf-8") as f:
