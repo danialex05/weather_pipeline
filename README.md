@@ -1,6 +1,6 @@
 # Pipeline de Datos Meteorológicos — Colombia
 
-**INETUM · Cliente BBVA | Prueba Técnica Senior Data Engineering**
+**Prueba Técnica Senior Data Engineering**
 
 Pipeline ETL reproducible que extrae, transforma y publica datos meteorológicos
 históricos para 5 ciudades colombianas, con orquestación en Airflow y almacenamiento
