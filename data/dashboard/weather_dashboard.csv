@@ -1,0 +1,46 @@
+﻿city_name,city_slug,department,latitude,longitude,year,month,temp_mean_avg,temp_max_avg,temp_min_avg,temp_max_abs,temp_min_abs,precipitation_total_mm,rain_days,heavy_rain_days,strong_wind_days,adverse_days,avg_windspeed_max_kmh,avg_windgusts_max_kmh,month_name
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,1,27.87,32.41,25.31,34.5,24.3,18.5,6,0,3,3,17.87,41.12,January
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,2,27.19,30.94,24.91,33.8,23.1,86.7,8,2,3,5,18.88,43.54,February
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,3,28.28,33.35,25.42,35.4,23.4,16.0,8,0,3,4,18.68,43.47,March
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,4,28.19,33.03,25.52,35.0,24.3,53.6,15,0,1,1,16.06,38.42,April
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,5,29.66,34.53,26.87,38.0,25.6,38.7,12,0,0,12,15.08,37.45,May
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,6,29.06,34.07,26.26,37.1,23.4,88.6,19,0,0,12,14.44,34.7,June
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,7,29.44,34.6,26.49,37.1,24.4,53.4,12,0,0,12,16.59,38.92,July
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,8,29.51,34.42,26.6,38.4,24.9,50.7,10,0,0,10,15.48,38.83,August
+Barranquilla,barranquilla,Atlántico,10.97,-74.78,2026,9,29.73,33.95,27.15,35.6,26.2,17.1,4,0,1,3,15.69,37.48,September
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,1,14.34,19.97,10.29,22.3,8.8,145.0,24,1,0,1,11.18,30.19,January
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,2,14.38,20.38,9.83,22.9,6.3,87.2,19,0,0,0,12.09,32.14,February
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,3,14.75,20.53,10.85,23.2,8.0,109.9,22,0,0,0,11.6,30.28,March
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,4,14.31,19.68,10.23,21.1,8.6,117.6,23,0,0,0,12.47,32.11,April
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,5,15.0,19.92,11.09,23.3,6.6,130.2,24,0,0,0,11.88,32.33,May
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,6,14.99,19.89,11.15,21.6,8.5,108.9,17,1,0,1,11.83,32.76,June
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,7,14.74,19.39,10.99,20.9,8.3,99.8,24,0,0,0,13.25,34.33,July
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,8,15.48,20.56,11.61,23.1,9.5,76.0,22,0,0,0,14.81,38.13,August
+Bogotá,bogota,Cundinamarca,4.71,-74.07,2026,9,15.63,20.61,11.31,22.0,10.0,33.1,12,0,0,0,14.48,38.22,September
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,1,21.84,26.1,18.99,28.2,18.2,252.1,31,4,0,4,6.31,21.72,January
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,2,21.95,26.59,18.89,29.0,17.6,169.4,26,0,0,0,6.26,23.14,February
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,3,22.92,28.1,19.4,30.1,18.2,135.0,24,1,0,1,9.32,27.63,March
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,4,22.66,27.43,19.25,29.6,17.4,337.2,28,6,0,6,8.07,24.5,April
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,5,23.27,27.65,20.24,30.5,19.2,226.0,27,1,0,1,6.1,21.47,May
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,6,23.15,27.27,20.23,30.1,19.0,194.1,21,0,0,0,5.96,21.38,June
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,7,23.68,28.35,20.5,31.4,18.5,93.0,17,1,0,1,7.67,23.72,July
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,8,24.11,28.86,20.81,32.6,19.4,119.0,17,2,0,2,8.88,25.85,August
+Cali,cali,Valle del Cauca,3.45,-76.53,2026,9,24.11,29.31,20.78,31.2,20.0,39.7,10,0,0,0,11.08,30.51,September
+Medellín,medellin,Antioquia,6.24,-75.58,2026,1,20.12,25.78,16.8,28.5,15.9,235.1,28,1,0,1,6.84,26.37,January
+Medellín,medellin,Antioquia,6.24,-75.58,2026,2,20.15,26.02,16.61,28.3,15.4,175.9,28,0,0,0,7.24,28.76,February
+Medellín,medellin,Antioquia,6.24,-75.58,2026,3,20.57,26.87,16.79,29.5,14.9,186.4,25,1,0,1,7.55,28.54,March
+Medellín,medellin,Antioquia,6.24,-75.58,2026,4,20.88,26.79,16.83,29.6,15.1,125.3,25,0,0,0,8.41,33.48,April
+Medellín,medellin,Antioquia,6.24,-75.58,2026,5,22.6,29.16,18.06,32.2,16.8,105.2,21,1,1,2,10.14,37.35,May
+Medellín,medellin,Antioquia,6.24,-75.58,2026,6,21.82,27.85,17.79,29.7,15.6,158.1,22,1,3,4,9.84,36.78,June
+Medellín,medellin,Antioquia,6.24,-75.58,2026,7,22.52,29.12,17.51,33.0,15.2,92.2,11,1,8,9,11.96,43.75,July
+Medellín,medellin,Antioquia,6.24,-75.58,2026,8,22.12,28.84,17.07,30.2,15.5,49.8,13,0,9,9,12.54,44.5,August
+Medellín,medellin,Antioquia,6.24,-75.58,2026,9,21.97,28.63,16.84,29.8,15.3,17.2,5,0,4,4,13.05,46.31,September
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,1,24.82,29.02,21.52,30.9,20.1,241.9,22,4,0,4,10.77,28.33,January
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,2,25.63,30.39,21.58,32.5,20.1,113.8,14,1,0,1,12.66,31.73,February
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,3,26.41,30.98,22.68,33.7,21.2,79.0,9,1,0,1,11.66,28.86,March
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,4,24.98,29.13,21.95,31.1,21.3,305.1,27,4,0,4,9.5,24.9,April
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,5,24.29,27.67,22.07,29.8,21.0,896.7,31,20,0,20,8.57,24.19,May
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,6,24.35,27.6,22.04,29.6,21.1,528.4,30,9,0,9,7.75,22.9,June
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,7,24.37,27.84,21.97,30.3,21.1,520.2,30,12,0,12,8.19,22.42,July
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,8,24.98,28.78,22.17,30.7,20.1,458.1,30,8,0,8,7.52,21.82,August
+Villavicencio,villavicencio,Meta,4.14,-73.63,2026,9,25.34,29.23,22.49,30.4,21.6,214.8,12,3,0,3,8.89,23.88,September

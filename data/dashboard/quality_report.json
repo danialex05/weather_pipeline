@@ -1,0 +1,57 @@
+[
+  {
+    "city": "Barranquilla",
+    "total_records": 258,
+    "expected_days": 258,
+    "missing_days": 0,
+    "duplicates": 0,
+    "null_fields": {},
+    "date_min": "2026-01-01",
+    "date_max": "2026-09-15",
+    "date_range_ok": true
+  },
+  {
+    "city": "Bogotá",
+    "total_records": 258,
+    "expected_days": 258,
+    "missing_days": 0,
+    "duplicates": 0,
+    "null_fields": {},
+    "date_min": "2026-01-01",
+    "date_max": "2026-09-15",
+    "date_range_ok": true
+  },
+  {
+    "city": "Cali",
+    "total_records": 258,
+    "expected_days": 258,
+    "missing_days": 0,
+    "duplicates": 0,
+    "null_fields": {},
+    "date_min": "2026-01-01",
+    "date_max": "2026-09-15",
+    "date_range_ok": true
+  },
+  {
+    "city": "Medellín",
+    "total_records": 258,
+    "expected_days": 258,
+    "missing_days": 0,
+    "duplicates": 0,
+    "null_fields": {},
+    "date_min": "2026-01-01",
+    "date_max": "2026-09-15",
+    "date_range_ok": true
+  },
+  {
+    "city": "Villavicencio",
+    "total_records": 258,
+    "expected_days": 258,
+    "missing_days": 0,
+    "duplicates": 0,
+    "null_fields": {},
+    "date_min": "2026-01-01",
+    "date_max": "2026-09-15",
+    "date_range_ok": true
+  }
+]

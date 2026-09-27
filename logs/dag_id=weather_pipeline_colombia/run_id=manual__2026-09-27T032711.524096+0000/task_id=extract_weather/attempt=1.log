@@ -1,0 +1,52 @@
+[2026-09-27T03:27:13.260+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-09-27T03:27:13.292+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: weather_pipeline_colombia.extract_weather manual__2026-09-27T03:27:11.524096+00:00 [queued]>
+[2026-09-27T03:27:13.299+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: weather_pipeline_colombia.extract_weather manual__2026-09-27T03:27:11.524096+00:00 [queued]>
+[2026-09-27T03:27:13.300+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 4
+[2026-09-27T03:27:13.311+0000] {taskinstance.py:2330} INFO - Executing <Task(_PythonDecoratedOperator): extract_weather> on 2026-09-27 03:27:11.524096+00:00
+[2026-09-27T03:27:13.316+0000] {standard_task_runner.py:63} INFO - Started process 442 to run task
+[2026-09-27T03:27:13.320+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'weather_pipeline_colombia', 'extract_weather', 'manual__2026-09-27T03:27:11.524096+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/weather_pipeline_dag.py', '--cfg-path', '/tmp/tmpee_j7ssm']
+[2026-09-27T03:27:13.321+0000] {standard_task_runner.py:91} INFO - Job 2: Subtask extract_weather
+[2026-09-27T03:27:13.380+0000] {task_command.py:426} INFO - Running <TaskInstance: weather_pipeline_colombia.extract_weather manual__2026-09-27T03:27:11.524096+00:00 [running]> on host c8bbdb5fab63
+[2026-09-27T03:27:13.487+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='daniel.bohorquez' AIRFLOW_CTX_DAG_ID='weather_pipeline_colombia' AIRFLOW_CTX_TASK_ID='extract_weather' AIRFLOW_CTX_EXECUTION_DATE='2026-09-27T03:27:11.524096+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-09-27T03:27:11.524096+00:00'
+[2026-09-27T03:27:13.488+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-09-27T03:27:13.572+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:13 | INFO     | src.extractor.weather_extractor | Iniciando extracción: 5 ciudades | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:13.572+0000] {weather_extractor.py:160} INFO - Iniciando extracción: 5 ciudades | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:13.573+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:13 | INFO     | src.extractor.weather_extractor | Extrayendo: Bogotá (bogota) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:13.573+0000] {weather_extractor.py:51} INFO - Extrayendo: Bogotá (bogota) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:14.415+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:14 | INFO     | src.extractor.weather_extractor | Bogotá: 258 días recibidos
+[2026-09-27T03:27:14.415+0000] {weather_extractor.py:64} INFO - Bogotá: 258 días recibidos
+[2026-09-27T03:27:14.429+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:14 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/bogota/bogota_20260927T032714Z.json
+[2026-09-27T03:27:14.429+0000] {weather_extractor.py:114} INFO - Raw guardado: data/raw/bogota/bogota_20260927T032714Z.json
+[2026-09-27T03:27:14.430+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:14 | INFO     | src.extractor.weather_extractor | Extrayendo: Medellín (medellin) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:14.430+0000] {weather_extractor.py:51} INFO - Extrayendo: Medellín (medellin) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:15.244+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:15 | INFO     | src.extractor.weather_extractor | Medellín: 258 días recibidos
+[2026-09-27T03:27:15.244+0000] {weather_extractor.py:64} INFO - Medellín: 258 días recibidos
+[2026-09-27T03:27:15.259+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:15 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/medellin/medellin_20260927T032715Z.json
+[2026-09-27T03:27:15.259+0000] {weather_extractor.py:114} INFO - Raw guardado: data/raw/medellin/medellin_20260927T032715Z.json
+[2026-09-27T03:27:15.260+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:15 | INFO     | src.extractor.weather_extractor | Extrayendo: Barranquilla (barranquilla) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:15.260+0000] {weather_extractor.py:51} INFO - Extrayendo: Barranquilla (barranquilla) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:16.085+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:16 | INFO     | src.extractor.weather_extractor | Barranquilla: 258 días recibidos
+[2026-09-27T03:27:16.085+0000] {weather_extractor.py:64} INFO - Barranquilla: 258 días recibidos
+[2026-09-27T03:27:16.097+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:16 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/barranquilla/barranquilla_20260927T032716Z.json
+[2026-09-27T03:27:16.097+0000] {weather_extractor.py:114} INFO - Raw guardado: data/raw/barranquilla/barranquilla_20260927T032716Z.json
+[2026-09-27T03:27:16.099+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:16 | INFO     | src.extractor.weather_extractor | Extrayendo: Cali (cali) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:16.099+0000] {weather_extractor.py:51} INFO - Extrayendo: Cali (cali) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:17.032+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Cali: 258 días recibidos
+[2026-09-27T03:27:17.032+0000] {weather_extractor.py:64} INFO - Cali: 258 días recibidos
+[2026-09-27T03:27:17.049+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/cali/cali_20260927T032717Z.json
+[2026-09-27T03:27:17.049+0000] {weather_extractor.py:114} INFO - Raw guardado: data/raw/cali/cali_20260927T032717Z.json
+[2026-09-27T03:27:17.051+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Extrayendo: Villavicencio (villavicencio) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:17.051+0000] {weather_extractor.py:51} INFO - Extrayendo: Villavicencio (villavicencio) | 2026-01-01 → 2026-09-15
+[2026-09-27T03:27:17.880+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Villavicencio: 258 días recibidos
+[2026-09-27T03:27:17.880+0000] {weather_extractor.py:64} INFO - Villavicencio: 258 días recibidos
+[2026-09-27T03:27:17.894+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/villavicencio/villavicencio_20260927T032717Z.json
+[2026-09-27T03:27:17.893+0000] {weather_extractor.py:114} INFO - Raw guardado: data/raw/villavicencio/villavicencio_20260927T032717Z.json
+[2026-09-27T03:27:17.896+0000] {logging_mixin.py:188} INFO - 2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Extracción completada: 5/5 exitosas
+[2026-09-27T03:27:17.896+0000] {weather_extractor.py:172} INFO - Extracción completada: 5/5 exitosas
+[2026-09-27T03:27:17.897+0000] {weather_pipeline_dag.py:50} INFO - extract_weather: 5 archivos raw generados
+[2026-09-27T03:27:17.898+0000] {python.py:237} INFO - Done. Returned value was: ['data/raw/bogota/bogota_20260927T032714Z.json', 'data/raw/medellin/medellin_20260927T032715Z.json', 'data/raw/barranquilla/barranquilla_20260927T032716Z.json', 'data/raw/cali/cali_20260927T032717Z.json', 'data/raw/villavicencio/villavicencio_20260927T032717Z.json']
+[2026-09-27T03:27:17.898+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-09-27T03:27:17.931+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=weather_pipeline_colombia, task_id=extract_weather, run_id=manual__2026-09-27T03:27:11.524096+00:00, execution_date=20260927T032711, start_date=20260927T032713, end_date=20260927T032717
+[2026-09-27T03:27:17.966+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2026-09-27T03:27:17.995+0000] {taskinstance.py:3498} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2026-09-27T03:27:17.998+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -1,0 +1,73 @@
+cities:
+  - name: Bogotá
+    slug: bogota
+    department: Cundinamarca
+    latitude: 4.7110
+    longitude: -74.0721
+
+  - name: Medellín
+    slug: medellin
+    department: Antioquia
+    latitude: 6.2442
+    longitude: -75.5812
+
+  - name: Barranquilla
+    slug: barranquilla
+    department: Atlántico
+    latitude: 10.9685
+    longitude: -74.7813
+
+  - name: Cali
+    slug: cali
+    department: Valle del Cauca
+    latitude: 3.4516
+    longitude: -76.5320
+
+  - name: Villavicencio
+    slug: villavicencio
+    department: Meta
+    latitude: 4.1420
+    longitude: -73.6266
+
+pipeline:
+  start_date: "2026-01-01"
+  end_date: "2026-09-15"
+  timezone: "America/Bogota"
+
+api:
+  base_url: "https://archive-api.open-meteo.com/v1/archive"
+  timeout_seconds: 30
+  max_retries: 3
+  retry_delay_seconds: 5
+  # Variables diarias requeridas
+  daily_variables:
+    - temperature_2m_max
+    - temperature_2m_min
+    - temperature_2m_mean
+    - precipitation_sum
+    - rain_sum
+    - precipitation_hours
+    - windspeed_10m_max
+    - windgusts_10m_max
+    - et0_fao_evapotranspiration
+
+thresholds:
+  # Umbrales documentados para indicadores derivados
+  rain_heavy_mm: 20.0         # Lluvia intensa: precipitación diaria > 20mm
+  rain_day_mm: 1.0            # Día lluvioso: precipitación diaria > 1mm
+  wind_strong_kmh: 50.0       # Viento fuerte: ráfaga máxima > 50 km/h
+  temp_cold_c: 10.0           # Temperatura baja: máx < 10°C
+  temp_hot_c: 35.0            # Temperatura alta: máx > 35°C
+  adverse_conditions:         # Día adverso: cumple al menos una condición
+    - heavy_rain
+    - strong_wind
+    - extreme_temp
+
+storage:
+  raw_path: "data/raw"
+  parquet_path: "data/processed/parquet"
+  dashboard_path: "data/dashboard"
+  partition_cols:
+    - city_slug
+    - year
+    - month

@@ -1,0 +1,22 @@
+2026-09-27 03:27:13 | INFO     | src.extractor.weather_extractor | Iniciando extracción: 5 ciudades | 2026-01-01 → 2026-09-15
+2026-09-27 03:27:13 | INFO     | src.extractor.weather_extractor | Extrayendo: Bogotá (bogota) | 2026-01-01 → 2026-09-15
+2026-09-27 03:27:14 | INFO     | src.extractor.weather_extractor | Bogotá: 258 días recibidos
+2026-09-27 03:27:14 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/bogota/bogota_20260927T032714Z.json
+2026-09-27 03:27:14 | INFO     | src.extractor.weather_extractor | Extrayendo: Medellín (medellin) | 2026-01-01 → 2026-09-15
+2026-09-27 03:27:15 | INFO     | src.extractor.weather_extractor | Medellín: 258 días recibidos
+2026-09-27 03:27:15 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/medellin/medellin_20260927T032715Z.json
+2026-09-27 03:27:15 | INFO     | src.extractor.weather_extractor | Extrayendo: Barranquilla (barranquilla) | 2026-01-01 → 2026-09-15
+2026-09-27 03:27:16 | INFO     | src.extractor.weather_extractor | Barranquilla: 258 días recibidos
+2026-09-27 03:27:16 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/barranquilla/barranquilla_20260927T032716Z.json
+2026-09-27 03:27:16 | INFO     | src.extractor.weather_extractor | Extrayendo: Cali (cali) | 2026-01-01 → 2026-09-15
+2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Cali: 258 días recibidos
+2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/cali/cali_20260927T032717Z.json
+2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Extrayendo: Villavicencio (villavicencio) | 2026-01-01 → 2026-09-15
+2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Villavicencio: 258 días recibidos
+2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Raw guardado: data/raw/villavicencio/villavicencio_20260927T032717Z.json
+2026-09-27 03:27:17 | INFO     | src.extractor.weather_extractor | Extracción completada: 5/5 exitosas
+2026-09-27 03:27:18 | INFO     | src.extractor.weather_extractor | Raw válido: Bogotá — 258 días
+2026-09-27 03:27:18 | INFO     | src.extractor.weather_extractor | Raw válido: Medellín — 258 días
+2026-09-27 03:27:18 | INFO     | src.extractor.weather_extractor | Raw válido: Barranquilla — 258 días
+2026-09-27 03:27:18 | INFO     | src.extractor.weather_extractor | Raw válido: Cali — 258 días
+2026-09-27 03:27:18 | INFO     | src.extractor.weather_extractor | Raw válido: Villavicencio — 258 días

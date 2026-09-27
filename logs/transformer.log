@@ -1,0 +1,16 @@
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer | Transformando: barranquilla — barranquilla_20260927T032716Z.json
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ Calidad Barranquilla: 258/258 días | Faltantes: 0 | Duplicados: 0 | Nulls: ninguno
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ barranquilla: 258 registros procesados, 27 columnas
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer | Transformando: bogota — bogota_20260927T032714Z.json
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ Calidad Bogotá: 258/258 días | Faltantes: 0 | Duplicados: 0 | Nulls: ninguno
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ bogota: 258 registros procesados, 27 columnas
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer | Transformando: cali — cali_20260927T032717Z.json
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ Calidad Cali: 258/258 días | Faltantes: 0 | Duplicados: 0 | Nulls: ninguno
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ cali: 258 registros procesados, 27 columnas
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer | Transformando: medellin — medellin_20260927T032715Z.json
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ Calidad Medellín: 258/258 días | Faltantes: 0 | Duplicados: 0 | Nulls: ninguno
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ medellin: 258 registros procesados, 27 columnas
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer | Transformando: villavicencio — villavicencio_20260927T032717Z.json
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ Calidad Villavicencio: 258/258 días | Faltantes: 0 | Duplicados: 0 | Nulls: ninguno
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer |   ✅ villavicencio: 258 registros procesados, 27 columnas
+2026-09-27 03:27:20 | INFO     | src.transformer.weather_transformer | Transformación completada: 1290 registros totales de 5 ciudades

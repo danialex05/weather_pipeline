@@ -1,0 +1,116 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# Docker Compose — Pipeline Meteorológico Colombia
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# Servicios:
+#   postgres     — Base de datos de metadatos de Airflow
+#   airflow-init — Inicializa BD y crea usuario admin (se ejecuta una sola vez)
+#   webserver    — UI de Airflow en http://localhost:8080
+#   scheduler    — Motor de orquestación de DAGs
+#
+# Volúmenes:
+#   ./data       — Datos raw, Parquet y dashboard (persistidos en host)
+#   ./logs       — Logs de Airflow
+#   ./dags       — DAGs (montados en caliente para desarrollo)
+#   ./src        — Código fuente (montado en caliente)
+#   ./config     — Configuración YAML
+#
+# Uso rápido:
+#   docker-compose up airflow-init   # Solo la primera vez
+#   docker-compose up -d             # Levanta todos los servicios
+#   # Luego: http://localhost:8080 | admin / admin
+# ══════════════════════════════════════════════════════════════════════════════
+
+x-airflow-common: &airflow-common
+  build: .
+  environment: &airflow-env
+    AIRFLOW__CORE__EXECUTOR:                    LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:        postgresql+psycopg2://airflow:airflow@postgres/airflow
+    AIRFLOW__CORE__FERNET_KEY:                  ""
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES:               "false"
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG:          "true"
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK:    "true"
+    # Pythonpath para que los módulos src/ sean importables desde los DAGs
+    PYTHONPATH: "/opt/airflow"
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./src:/opt/airflow/src
+    - ./config:/opt/airflow/config
+    - ./data:/opt/airflow/data
+    - ./logs:/opt/airflow/logs
+  depends_on:
+    postgres:
+      condition: service_healthy
+  networks:
+    - weather_net
+
+services:
+  # ── PostgreSQL: backend de metadatos de Airflow ──────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER:     airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB:       airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    networks:
+      - weather_net
+    restart: unless-stopped
+
+  # ── Inicialización de Airflow (se ejecuta una vez y termina) ─────────────
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        airflow db init
+        airflow users create \
+          --username admin \
+          --firstname Admin \
+          --lastname User \
+          --role Admin \
+          --email admin@example.com \
+          --password admin
+        echo "Airflow inicializado correctamente."
+    restart: "no"
+
+  # ── Webserver: UI de Airflow ─────────────────────────────────────────────
+  webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  # ── Scheduler: motor de orquestación ────────────────────────────────────
+  scheduler:
+    <<: *airflow-common
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "airflow", "jobs", "check", "--job-type", "SchedulerJob", "--hostname", "$${HOSTNAME}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  weather_net:
+    driver: bridge

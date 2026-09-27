@@ -1,0 +1,6 @@
+2026-09-27 03:27:22 | INFO     | src.loader.parquet_loader | ✅ Parquet guardado: data/processed/parquet | 1290 registros | 45 archivos de partición
+2026-09-27 03:27:24 | INFO     | src.loader.parquet_loader | ✅ Dashboard dataset: 45 registros mensuales | weather_dashboard.parquet + weather_dashboard.csv
+2026-09-27 03:27:24 | INFO     | src.loader.parquet_loader | ✅ Reporte de calidad guardado: data/dashboard/quality_report.json
+2026-09-27 03:27:24 | INFO     | src.loader.parquet_loader | ✅ Verificación Parquet: 1290 registros leídos correctamente
+2026-09-27 03:27:24 | INFO     | src.loader.parquet_loader |    Columnas: ['date', 'city_name', 'department', 'latitude', 'longitude', 'month_name', 'day_of_week', 'temp_max_c', 'temp_min_c', 'temp_mean_c', 'temp_range_c', 'precipitation_mm', 'rain_mm', 'precipitation_hours', 'windspeed_max_kmh', 'windgusts_max_kmh', 'evapotranspiration_mm', 'rain_day', 'heavy_rain', 'strong_wind', 'cold_day', 'hot_day', 'adverse_day', 'city_slug', 'year', 'month']
+2026-09-27 03:27:24 | INFO     | src.loader.parquet_loader |    Ciudades: ['Barranquilla', 'Bogotá', 'Cali', 'Medellín', 'Villavicencio']
