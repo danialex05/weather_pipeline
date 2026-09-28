@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+logs/
+*.log
+*.pid
+data/raw/*
+data/processed/*
+data/dashboard/*
+!data/**/.gitkeep
+.vscode/
+.idea/
+.DS_Store
